@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,14 +23,15 @@ public class Main {
                 System.out.println("Промах! Ваше число меньше загаданного.");
             }
             if(i == 2){
-              System.out.println("Попытки кончились вы проиграли");
+                System.out.println("Попытки кончились вы проиграли");
             }
         }
         //Задание №2
-       String[] allwords = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot", "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea", "peanut", "pear", "pepper", "pineapple", "pumpkin", "potato"};
-       String word = allwords[rand.nextInt(allwords.length)];
-       String tempWord = "###############";
+        String[] allwords = {"apple", "orange", "lemon", "banana", "apricot", "avocado", "broccoli", "carrot", "cherry", "garlic", "grape", "melon", "leak", "kiwi", "mango", "mushroom", "nut", "olive", "pea", "peanut", "pear", "pepper", "pineapple", "pumpkin", "potato"};
+        String word = allwords[rand.nextInt(allwords.length)];
+        String tempWord = "###############";
         do{
+            System.out.println("Введите слово");
             Scanner sc = new Scanner(System.in);
             String inpWord = sc.nextLine();
 
@@ -42,27 +41,29 @@ public class Main {
             }
             for (int i = 0; i < word.length(); i++) {
 
+                if(i == inpWord.length())break;
+
+                if(inpWord.charAt(i) == word.charAt(i)){
+                    char[] tempCharString = tempWord.toCharArray();
+                    tempCharString[i] = word.charAt(i);
+                    tempWord = new String(tempCharString);
+                }
             }
+            System.out.println("Вы угадали буквы: " +tempWord);
 
         }while (true);
-
-
-
-
-
-
 
     }
 
     static int readChislo(){
         Scanner sc = new Scanner(System.in);
         do{
-          if(sc.hasNextInt())
-          {
-              return sc.nextInt();
-          }
-          sc.nextLine();
-          System.out.println("Введите число от 1 до 9");
+            if(sc.hasNextInt())
+            {
+                return sc.nextInt();
+            }
+            sc.nextLine();
+            System.out.println("Введите число от 1 до 9");
         }while(true);
     }
 
