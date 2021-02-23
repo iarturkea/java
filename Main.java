@@ -2,29 +2,43 @@ package com.company;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class Main {
 
     public static void main(String[] args) {
+        char winer;
         System.out.println("Введите размер поля");
         int razmer = readChislo();
-
+        System.out.println("Введите длину победы больше 1 но меньше размера поля");
+        int lnWin = readChislo();
         char[][] pole = new char[razmer][razmer];
         for (int i = 0; i < pole.length; i++) {
             for (int j = 0; j < pole.length; j++) {
                 pole[i][j] = '@';
             }
         }
+        do{
 
-        printPole(pole);
-        zaprosHoda(pole);
-        hodPc(pole);
-        printPole(pole);
+            zaprosHoda(pole);
+            winer = checkWin(pole, lnWin);
+            System.out.println("winer =" + winer);
+            printPole(pole);
+            if(winer != '@')break;
+            hodPc(pole);
+            winer = checkWin(pole,lnWin);
+            System.out.println("winer =" + winer);
+            printPole(pole);
+            if (winer != '@')break;
+            if (!drawCheck(pole))System.out.println("Ничья");
+
+        }while (drawCheck(pole));
+
+        if(winer == 'O')System.out.println("PC win");
+        else System.out.println("Your win");
 
 
     }
-        //Печать поля.
+    //Печать поля.
     static void printPole(char[][] pole) {
         for (int i = 0; i < pole.length; i++) {
             for (int j = 0; j < pole.length; j++) {
@@ -35,7 +49,7 @@ public class Main {
         }
 
     }
-     //Вод числа
+    //Вод числа
     static int readChislo(){
         Scanner sc = new Scanner(System.in);
         do{
@@ -61,7 +75,7 @@ public class Main {
                     int x = sc.nextInt() - 1;
                     int y = sc2.nextInt() - 1;
 
-                    if(x > pole.length || x > pole.length) System.out.println("Такого поля нет");
+                    if(x > pole.length || y > pole.length) System.out.println("Такого поля нет");
 
                     else if(pole[x][y] == '@'){
                         pole[x][y] = 'x';
@@ -77,6 +91,7 @@ public class Main {
         }while(true);
 
     }
+    // Ход ПК
     static void hodPc(char[][] pole){
         do{
             Random rand = new Random();
@@ -90,85 +105,86 @@ public class Main {
         }while (true);
 
     }
-    static void checkWin(char[][] pole, boolean chWin, String winer;){
-        int chek = 0;
+    //Прроверка на наличе победы
+    static char checkWin(char[][] pole, int lnWin){
+
+        int winCount = 0;
+        char winer ='@';
         for (int i = 0; i < pole.length; i++) {
             for (int j = 0; j < pole.length; j++) {
                 if(pole[i][j] != '@'){
-                    switch (i){
-                        case 0:
-                            if (j == 0){
-                                    for (int k = j + 1; k < pole.length; k++) {
-                                        if(pole[i][j] != pole[i][k]){
-                                            chek = 0;
-                                            break;
-                                        }
-                                        chek++;
-                                    }
-                                    for (int k = i + 1; k < pole.length; k++) {
-                                        if(pole[i][j] != pole[k][j]){
-                                            chek = 0;
-                                            break;
-                                        }
-                                        chek++;
-                                    }
-                                    for (int k = i + 1; k < pole.length; k++) {
-                                        if(pole[i][j] != pole[k][k]){
-                                            chek = 0;
-                                            break;
-                                        }
-                                        chek++;
-                                    }
-                                    if(chek==2)break;
+                    //Проверка горизонтали
+                    if(i < pole.length - lnWin){
+                        winCount = 0;
+                        for (int k = i; k < lnWin; k++) {
+                            if(pole[k][j] == pole[k+1][j]) winCount++;
 
-                            }
-                            else {
-                                for (int k = j + 1; k < pole.length; k++) {
-                                    if (pole[i][j] != pole[i][k]) {
-                                        chek = 0;
-                                        break;
-                                    }
-                                    chek++;
-                                }
-                                if(chek == 2)break;
-                            }
-                        case 1:
-                            int chek = 0;
-                            for (int k = i + 1; k < pole.length; k++) {
-                                if(pole[i][j] != pole[i][k]){
-                                    chek = 0;
-                                    break;
-                                }
-                                chek++;
-                            }
-                            if(chek == 2)break;
-                        case 3:
-                            for (int k = i + 1; k < pole.length; k++) {
-                                if(pole[i][j] != pole[i][k]){
-                                    chek = 0;
-                                    break;
-                                }
-                                chek++;
-                            }
-                            if(chek==2)break;
-                            for (int k = i + 1; k < pole.length; k++) {
-                                if(pole[i][j] != pole[k][k]){
-                                    chek = 0;
-                                    break;
-                                }
-                                chek++;
-                            }
-                            if(chek==2)break;
+                        }
+                        if (winCount == lnWin) {
+                            winer = pole[i][j];
+                            break;
+                        }
+                    }
+                    //Проверка вертикали
+                    if(j < pole.length - lnWin){
+                        winCount = 0;
+                        for (int k = j; k < lnWin; k++) {
+                            if (pole[i][k] == pole[i][k+1]) winCount++;
 
+                        }
+                        if (winCount == lnWin) {
+                            winer = pole[i][j];
+                            break;
+                        }
+                    }
+                    //Проверка диагонали1
+                    if(i < pole.length - lnWin & j < pole.length - lnWin){
+                        winCount = 0;
+                        for (int k = 1; k <= lnWin; k++) {
+                            if(pole[i+winCount][j+winCount] == pole[i+1+winCount][j+1+winCount])winCount++;
+                            if(winCount != k)break;
+                            if(winCount == lnWin)break;
+                        }
+                        if (winCount == lnWin) {
+                            winer = pole[i][j];
+                            break;
+                        }
+                    }
+                    //Проверка диагонали2
+                   if (i < pole.length - lnWin & j > pole.length - lnWin ){
+                        winCount = 0;
+                        for (int k = 1; k <= lnWin; k++) {
+                            if(pole[i+winCount][j-winCount] == pole[i+1+winCount][j-1-winCount]) winCount++;
+                            if(winCount != k)break;
+                            if(winCount == lnWin)break;
+
+                        }
+                        if (winCount == lnWin) {
+                            winer = pole[i][j];
+                            break;
+                        }
                     }
 
                 }
+
             }
-
-
-
+            if (winCount == lnWin)break;
 
         }
+        return winer;
+
+    }
+    //проверка на ничью
+    static boolean drawCheck(char[][] pole){
+        int empty = 0;
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
+                if(pole[i][j] == '@')empty++;
+
+            }
+
+        }
+        return empty > 0;
 
     }
 
