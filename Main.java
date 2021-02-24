@@ -9,10 +9,12 @@ public class Main {
         char winer;
         int razmer = 0;
         int lnWin =0;
-        System.out.println("Введите размер поля");
+
         do {
+            System.out.println("Введите размер поля");
             razmer = readNum();
             if (razmer > 2)break;
+            System.out.println("Поле меньше 3х");
         }while (true);
 
         char[][] pole = new char[razmer][razmer];
@@ -22,10 +24,13 @@ public class Main {
             }
         }
         printPole(pole);
-        System.out.println("Введите длину победы");
         do {
+            System.out.println("Введите длину победы");
             lnWin = readNum() - 1;
-            if(lnWin > 1 & lnWin < razmer)break;
+            if(lnWin < 1) System.out.println("Слишком короткая победа");
+            else if(lnWin + 1 > pole.length)System.out.println("Слишком короткая победа");
+            else break;
+
         }while (true);
         System.out.println("Условия победы " + (lnWin + 1) +" в ряд" );
         do{
@@ -64,7 +69,7 @@ public class Main {
         }
 
     }
-    //Вод размера поля
+    //Вод Числа
     static int readNum(){
         Scanner sc = new Scanner(System.in);
         do{
