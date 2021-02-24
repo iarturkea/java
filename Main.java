@@ -7,24 +7,34 @@ public class Main {
 
     public static void main(String[] args) {
         char winer;
+        int razmer = 0;
+        int lnWin =0;
         System.out.println("Введите размер поля");
-        int razmer = readChislo();
-        System.out.println("Введите длину победы больше 1 но меньше размера поля");
-        int lnWin = readChislo();
+        do {
+            razmer = readNum();
+            if (razmer > 2)break;
+        }while (true);
+
         char[][] pole = new char[razmer][razmer];
         for (int i = 0; i < pole.length; i++) {
             for (int j = 0; j < pole.length; j++) {
                 pole[i][j] = '@';
             }
         }
+        printPole(pole);
+        System.out.println("Введите длину победы");
+        do {
+            lnWin = readNum() - 1;
+            if(lnWin > 1 & lnWin < razmer)break;
+        }while (true);
+        System.out.println("Условия победы " + (lnWin + 1) +" в ряд" );
         do{
-
             zaprosHoda(pole);
             winer = checkWin(pole, lnWin);
             System.out.println("winer =" + winer);
             printPole(pole);
             if(winer != '@')break;
-            hodPc(pole);
+            hodPc(pole, lnWin);
             winer = checkWin(pole,lnWin);
             System.out.println("winer =" + winer);
             printPole(pole);
@@ -49,8 +59,8 @@ public class Main {
         }
 
     }
-    //Вод числа
-    static int readChislo(){
+    //Вод размера поля
+    static int readNum(){
         Scanner sc = new Scanner(System.in);
         do{
             if(sc.hasNextInt())
@@ -92,17 +102,89 @@ public class Main {
 
     }
     // Ход ПК
-    static void hodPc(char[][] pole){
-        do{
-            Random rand = new Random();
-            int x = rand.nextInt(pole.length);
-            int y = rand.nextInt(pole.length);
-            if (pole[x][y] == '@'){
-                pole[x][y] = 'O';
-                break;
-            }
+    static void hodPc(char[][] pole, int lnWin){
+        int winCount = 0;
+        lnWin--;
+        boolean block = false;
+        //Поиск хода для блока
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
+                if(pole[i][j] == 'x'){
+                    //Проверка горизонтали
+                    if(i < pole.length - lnWin){
+                        winCount = 0;
+                        for (int k = i; k < lnWin; k++) {
+                            if(pole[k][j] == pole[k+1][j]) winCount++;
 
-        }while (true);
+                        }
+                        if (winCount == lnWin & pole[i+winCount+1][j] == '@') {
+                            pole[i+lnWin+1][j] = 'O';
+                            block = true;
+                            break;
+                        }
+                    }
+                    //Проверка вертикали
+                    if(j < pole.length - lnWin){
+                        winCount = 0;
+                        for (int k = j; k < lnWin; k++) {
+                            if (pole[i][k] == pole[i][k+1]) winCount++;
+
+                        }
+                        if (winCount == lnWin & pole[i][j+winCount+1] == '@') {
+                            pole[i][j+lnWin+1] = 'O';
+                            block = true;
+                            break;
+                        }
+                    }
+                    //Проверка диагонали1
+                    if(i < pole.length - lnWin & j < pole.length - lnWin){
+                        winCount = 0;
+                        for (int k = 1; k <= lnWin; k++) {
+                            if(pole[i+winCount][j+winCount] == pole[i+1+winCount][j+1+winCount])winCount++;
+                            if(winCount != k)break;
+                            if(winCount == lnWin)break;
+                        }
+                        if (winCount == lnWin & pole[i+1+winCount][j+1+winCount] == '@') {
+                            pole[i+1+winCount][j+1+winCount] = 'O';
+                            block =true;
+                            break;
+                        }
+                    }
+                    //Проверка диагонали2
+                    if (i < pole.length - lnWin & j > pole.length - lnWin ){
+                        winCount = 0;
+                        for (int k = 1; k <= lnWin; k++) {
+                            if(pole[i+winCount][j-winCount] == pole[i+1+winCount][j-1-winCount]) winCount++;
+                            if(winCount != k)break;
+                            if(winCount == lnWin)break;
+
+                        }
+                        if (winCount == lnWin & pole[i+1+winCount][j-1-winCount] == '@') {
+                            pole[i+1+winCount][j-1-winCount] = 'O';
+                            block =true;
+                            break;
+                        }
+                    }
+
+                }
+
+            }
+            if (winCount == lnWin & block)break;
+
+        }
+        if(!block) {
+
+            do {
+                Random rand = new Random();
+                int x = rand.nextInt(pole.length);
+                int y = rand.nextInt(pole.length);
+                if (pole[x][y] == '@') {
+                    pole[x][y] = 'O';
+                    break;
+                }
+
+            } while (true);
+        }
 
     }
     //Прроверка на наличе победы
