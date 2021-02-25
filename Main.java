@@ -38,9 +38,8 @@ public class Main {
             winer = checkWin(pole, lnWin);
             printPole(pole);
             if(winer != '@')break;
-            if (drawCheck(pole))break;
             System.out.println("Ход PC");
-            hodPc(pole, lnWin);
+            if(hodPc(pole, lnWin))break;
             winer = checkWin(pole,lnWin);
             printPole(pole);
             if (winer != '@')break;
@@ -112,7 +111,21 @@ public class Main {
 
     }
     // Ход ПК
-    static void hodPc(char[][] pole, int lnWin){
+    static boolean hodPc(char[][] pole, int lnWin){
+        int blanckCount=0;
+        int RADIX = 10;
+        for (int i = 0; i < pole.length; i++) {
+            for (int j = 0; j < pole.length; j++) {
+                if(pole[i][j] == '@'){
+                    pole[i][j] = Character.forDigit(blanckCount, RADIX);
+                    blanckCount++;
+                }
+
+            }
+
+        }
+        if (blanckCount == 0)return true; //проверка на ничью
+
         int winCount = 0;
         lnWin--;
         boolean block = false;
@@ -127,12 +140,12 @@ public class Main {
                             if(pole[k][j] == pole[k+1][j]) winCount++;
 
                         }
-                        if (winCount == lnWin && i+winCount+1 < pole.length && pole[i+winCount+1][j] == '@') {
+                        if (winCount == lnWin && i+winCount+1 < pole.length && pole[i+winCount+1][j] != 'O' && pole[i+winCount+1][j] != 'x') {
                             pole[i+lnWin+1][j] = 'O';
                             block = true;
                             break;
                         }
-                        if (winCount == lnWin && i > 0 && pole[i-1][j] =='@'){
+                        if (winCount == lnWin && i > 0 && pole[i-1][j] !='O' && pole[i-1][j] !='x'){
                             pole[i-1][j] = 'O';
                             block = true;
                             break;
@@ -145,12 +158,12 @@ public class Main {
                             if (pole[i][k] == pole[i][k+1]) winCount++;
 
                         }
-                        if (winCount == lnWin && j+winCount+1 < pole.length && pole[i][j+winCount+1] == '@') {
+                        if (winCount == lnWin && j+winCount+1 < pole.length && pole[i][j+winCount+1] != 'O' && pole[i][j+winCount+1] != 'x') {
                             pole[i][j+lnWin+1] = 'O';
                             block = true;
                             break;
                         }
-                        if (winCount == lnWin && j > 0 && pole[i][j - 1] == '@') {
+                        if (winCount == lnWin && j > 0 && pole[i][j - 1] != 'x' && pole[i][j - 1] != 'O') {
                             pole[i][j - 1] = 'O';
                             block = true;
                             break;
@@ -163,12 +176,12 @@ public class Main {
                             if(pole[i+winCount][j+winCount] == pole[i+1+winCount][j+1+winCount])winCount++;
                             if(winCount == lnWin || i+winCount+1 == pole.length )break;
                         }
-                        if (winCount == lnWin && i+1+winCount < pole.length && j+1+winCount < pole.length && pole[i+1+winCount][j+1+winCount] == '@') {
+                        if (winCount == lnWin && i+1+winCount < pole.length && j+1+winCount < pole.length && pole[i+1+winCount][j+1+winCount] != 'O' && pole[i+1+winCount][j+1+winCount] != 'x') {
                             pole[i+1+winCount][j+1+winCount] = 'O';
                             block =true;
                             break;
                         }
-                        if(winCount == lnWin && j > 0 && i > 0 && pole[i - 1][j - 1] == '@'){
+                        if(winCount == lnWin && j > 0 && i > 0 && pole[i - 1][j - 1] != 'O' && pole[i - 1][j - 1] != 'x'){
                             pole[i - 1][j - 1] = 'O';
                         }
                     }
@@ -180,12 +193,12 @@ public class Main {
                             if(winCount == lnWin || i+winCount+1 == pole.length )break;
 
                         }
-                        if (winCount == lnWin && i+1+winCount < pole.length && j-1-winCount > 0 && pole[i+1+winCount][j-1-winCount] == '@') {
+                        if (winCount == lnWin && i+1+winCount < pole.length && j-1-winCount > 0 && pole[i+1+winCount][j-1-winCount] != 'O' && pole[i+1+winCount][j-1-winCount] != 'x') {
                             pole[i+1+winCount][j-1-winCount] = 'O';
                             block =true;
                             break;
                         }
-                        if (winCount == lnWin && i-1-winCount > 0 && j+1+winCount < pole.length && pole[i-1-winCount][j+1+winCount] == '@') {
+                        if (winCount == lnWin && i-1-winCount > 0 && j+1+winCount < pole.length && pole[i-1-winCount][j+1+winCount] != 'x' && pole[i-1-winCount][j+1+winCount] != 'O') {
                             pole[i+1+winCount][j-1-winCount] = 'O';
                             block =true;
                             break;
@@ -198,19 +211,21 @@ public class Main {
             if (winCount == lnWin & block)break;
 
         }
-        if(!block) {
+        {
+            Random rand = new Random();
+            int randTurn = rand.nextInt(blanckCount);
 
-            do {
-                Random rand = new Random();
-                int x = rand.nextInt(pole.length);
-                int y = rand.nextInt(pole.length);
-                if (pole[x][y] == '@') {
-                    pole[x][y] = 'O';
-                    break;
+            for (int i = 0; i < pole.length; i++) {
+                for (int j = 0; j < pole.length; j++) {
+                    if (!block && randTurn == Character.digit (pole[i][j], RADIX)){
+                        pole[i][j] = 'O';
+                    }
+                    if(pole[i][j] != 'x' && pole[i][j] != 'O') pole[i][j] = '@';
+
                 }
-
-            } while (true);
+            }
         }
+        return false;
 
     }
     //Прроверка на наличе победы
@@ -259,7 +274,7 @@ public class Main {
                         }
                     }
                     //Проверка диагонали2
-                   if (i < pole.length - lnWin & j > pole.length - lnWin ){
+                    if (i < pole.length - lnWin & j > pole.length - lnWin ){
                         winCount = 0;
                         for (int k = 1; k <= lnWin; k++) {
                             if(pole[i+winCount][j-winCount] == pole[i+1+winCount][j-1-winCount]) winCount++;
@@ -281,16 +296,7 @@ public class Main {
         return winer;
 
     }
-    //проверка на ничью
-    static boolean drawCheck(char[][] pole){
-        for (int i = 0; i < pole.length; i++) {
-            for (int j = 0; j < pole.length; j++) {
-                if(pole[i][j] == '@')return false;
 
-            }
 
-        }
-        return true;
-    }
 
 }
