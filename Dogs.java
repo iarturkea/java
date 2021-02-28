@@ -1,23 +1,23 @@
-package com.company;
 
 import java.util.Scanner;
 
 public class Dogs extends Animals {
 
     public Dogs (String name, int count){
+        super(name, count);
         this.className = "Собака";
-        this.name = name;
         this.maxRangeRun = 200;
         this.maxRangSwim = 10;
-        this.counter = count + 1;
     }
 
-    static void inputAnimals(int count, Animals[] arrAnimal) {
+    static Animals[] whouIsName(Animals[] arr, int count){
         Scanner scr = new Scanner(System.in);
-            for (int i = 0; i < arrAnimal.length; i++) {
-                System.out.println("Введите кличку Собаки №"+(1+i));
-                arrAnimal[i] = new Dogs(scr.nextLine(), count);
-                count = arrAnimal[i].counter;
-            }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println("Введите кличку Собаки №"+(1+i));
+            Dogs newAnimal = new Dogs(scr.nextLine(), count);
+            arr[i] = newAnimal;
+            count++;
+        }
+        return arr;
     }
 }

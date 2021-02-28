@@ -1,27 +1,28 @@
-package com.company;
-
 import java.util.Scanner;
 
 public class Cats extends Animals {
 
-    public Cats (String name, int count){
+    Cats (String name, int count){
+        super(name, count);
         this.className = "Кошка";
-        this.name = name;
-        this.maxRangeRun = 200;
-        this.counter = count + 1;
+        this.maxRangeRun = 100;
 
     }
     @Override
-    public void swim(int i){
-        System.out.println("Вы утопили кошку");
+    void swim(int i){
+        System.out.println("Вы утопили кошку " + this.name);
     }
-    static void inputAnimals(int count, Animals[] arrAnimal){
+
+    static Animals[] whouIsName(Animals[] arr, int count){
         Scanner scr = new Scanner(System.in);
-        for (int i = 0; i < arrAnimal.length; i++){
+        for (int i = 0; i < arr.length; i++) {
             System.out.println("Введите кличку Кошки №"+(1+i));
-            arrAnimal[i] = new Cats(scr.nextLine(), count);
-            count = arrAnimal[i].counter;
+            Cats newAnimal = new Cats(scr.nextLine(), count);
+            arr[i] = newAnimal;
+            count++;
+
         }
+        return arr;
     }
 
 }
