@@ -6,15 +6,17 @@ public class Main {
 
         int count = 0;
         int whoIs;
-        Cats[] arrCats;
-        Dogs[] arrDogs;
+        Animals[] arrCats;
+        Animals[] arrDogs;
+        Cats cat =new Cats("Главная кошка", count);
+        Dogs dog = new Dogs("Главнвя собака",count);
         do {
 
             Scanner scr = new Scanner(System.in);
             System.out.println("Кто пришел?");
             System.out.println("Кошки - введите 1");
             System.out.println("Собаки - введите 2");
-            System.out.println("Никого - введите 0?");
+            System.out.println("Никого - введите 0");
 
                 do {
                     if (scr.hasNextInt()) {
@@ -29,26 +31,28 @@ public class Main {
 
                 switch (whoIs) {
                     case 1:
-                        arrCats = new Cats[readQuantity()];
-                        Cats.whouIsName(arrCats, count);
-                        count =  Animals.countPrint(arrCats);
+                        arrCats = new Animals [readQuantity()];
+                        cat.whouIsName(arrCats, count);
+                        count =  cat.countPrint(arrCats);
                         System.out.println("На тренеровке:");
                         for (int i = 0; i < arrCats.length; i++) {
                             Cats.animalInfo(arrCats[i]);
                         }
-                        Cats.make(Cats.findAnimal(arrCats));
+                        cat.make(cat.findAnimal(arrCats));
                         break;
                     case 2:
                         arrDogs = new Dogs[readQuantity()];
-                        Dogs.whouIsName(arrDogs, count);
-                        count = Animals.countPrint(arrDogs);
+                        Animals[] animals1 = dog.whouIsName(arrDogs, count);
+                        count = dog.countPrint(arrDogs);
                         System.out.println("На тренеровке:");
                         for (int i = 0; i < arrDogs.length; i++) {
                             Dogs.animalInfo(arrDogs[i]);
                         }
-                        Dogs.make(Animals.findAnimal(arrDogs));
+                        dog.make(dog.findAnimal(arrDogs));
                         count = arrDogs[arrDogs.length-1].counter;
                         break;
+                    default:
+
                 }
 
             System.out.println("Сегодня уже пришло " + count);

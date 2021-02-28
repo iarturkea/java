@@ -2,6 +2,7 @@
 import java.util.Scanner;
 
 public class Dogs extends Animals {
+    Dogs(){};
 
     public Dogs (String name, int count){
         super(name, count);
@@ -9,8 +10,8 @@ public class Dogs extends Animals {
         this.maxRangeRun = 200;
         this.maxRangSwim = 10;
     }
-
-    static Animals[] whouIsName(Animals[] arr, int count){
+    @Override
+     Animals[] whouIsName(Animals[] arr, int count){
         Scanner scr = new Scanner(System.in);
         for (int i = 0; i < arr.length; i++) {
             System.out.println("Введите кличку Собаки №"+(1+i));

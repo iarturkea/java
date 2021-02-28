@@ -41,12 +41,12 @@ public class Animals {
 
     }
 
-    static int countPrint(Animals[] arr){
+    int countPrint(Animals[] arr){
         System.out.println(arr[0].className + " пришло - " + arr[arr.length-1].counter);
         return arr[arr.length-1].counter;
     }
 
-    static Animals[] whouIsName (Animals[] arr, int count){
+     Animals[] whouIsName (Animals[] arr, int count){
         Scanner scr = new Scanner(System.in);
             for (int i = 0; i < arr.length; i++) {
                 System.out.println("Введите имя Животного");
@@ -71,13 +71,12 @@ public class Animals {
                 }
             }
             System.out.println("Такого животнго нет");
-            System.out.println("Введите имя или номер животнго");
 
         }while (true);
 
     }
 
-    static void make (Animals animal){
+    void make (Animals animal){
         Scanner scr = new Scanner(System.in);
 
         int num = 0;

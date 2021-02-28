@@ -12,8 +12,8 @@ public class Cats extends Animals {
     void swim(int i){
         System.out.println("Вы утопили кошку " + this.name);
     }
-
-    static Animals[] whouIsName(Animals[] arr, int count){
+    @Override
+     Animals[] whouIsName(Animals[] arr, int count){
         Scanner scr = new Scanner(System.in);
         for (int i = 0; i < arr.length; i++) {
             System.out.println("Введите кличку Кошки №"+(1+i));
