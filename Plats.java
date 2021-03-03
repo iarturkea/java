@@ -12,14 +12,14 @@ public class Plats {
         this.currentCapacity = 0;
     }
 
-    public void addFood(Plats plate){
+    public void addFood(){
 
         int tmp = readQuantity();
-        if(tmp > plate.capacity){
-            plate.currentCapacity = plate.capacity;
-            System.out.println("Напол просыпалось "+ (tmp - plate.capacity) + " еды и ее пришлось выкинуть");
-        }else plate.currentCapacity = tmp;
-        System.out.println("В тарелке " + plate.currentCapacity + " еды");
+        if(tmp > this.capacity){
+            this.currentCapacity = this.capacity;
+            System.out.println("Напол просыпалось "+ (tmp - this.capacity) + " еды и ее пришлось выкинуть");
+        }else this.currentCapacity = tmp;
+        System.out.println("В тарелке " + this.currentCapacity + " еды");
     }
 
     private int readQuantity() {

@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         Plats plat = new Plats(100);
+        plat.addFood();
         Scanner scr = new Scanner(System.in);
 	    Cats[] arrCats = new Cats[5];
 	    String name;
