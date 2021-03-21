@@ -14,13 +14,13 @@ public class Cat implements act {
 
 
     @Override
-    public boolean run(ObstacleCourseElement trdm) {
+    public boolean run(Treadmill trdm) {
         if (trdm.dist > this.maxRunDist){
-            System.out.println(className + this.name + " Устала и свернулась колачиком");
+            System.out.println(className + " " + this.name + " Устала и свернулась колачиком");
             return false;
         }
         else {
-            System.out.println(className + this.name + " прбежала" + trdm.dist);
+            System.out.println(className + " " + this.name + " прбежала " + trdm.dist + "м");
             return true;
         }
     }
@@ -31,13 +31,13 @@ public class Cat implements act {
     }
 
     @Override
-    public boolean jump(ObstacleCourseElement wall) {
+    public boolean jump(Wall wall) {
         if (wall.height > this.maxJumpHeight){
-            System.out.println(className + this.name + " не перепрыгнула " + wall.height + "м");
+            System.out.println(className + " " + this.name + " не перепрыгнула " + wall.height + "м");
             return false;
         }
         else {
-            System.out.println(className + this.name + " перепрыгула стену" + wall.height + "м");
+            System.out.println(className + " " + this.name + " перепрыгула стену" + wall.height + "м");
             return true;
         }
 

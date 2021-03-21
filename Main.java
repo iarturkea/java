@@ -5,8 +5,13 @@ public class Main {
     public static void main(String[] args) {
         int participantsNum;
         int obstaclNum;
-
+        Treadmill trdmDefualt;
+        boolean passCheck;
+        Wall wallDefualt = new Wall(0);
+        System.out.println("Укажите количество участниов");
         participantsNum = readNum();
+        System.out.println("Укажите количество препятствий1");
+
         obstaclNum = readNum();
 
         act[] participants = new act[participantsNum];
@@ -25,8 +30,18 @@ public class Main {
             System.out.print("Трассу проходит ");
             participants[i].sayInfo();
             for (int j = 0; j < obstacls.length; j++) {
-                if (obstacls[j] instanceof Treadmill)
-                    participants[i].run(obstacls[j]);
+                if (obstacls[j] instanceof Treadmill) {
+                    trdmDefualt = (Treadmill) obstacls[j];
+                    if(!participants[i].run(trdmDefualt)){
+                        System.out.println("Участник сошел с дистанции");break;
+                    }
+                }
+                else {
+                    wallDefualt = (Wall) obstacls[j];
+                    if (!participants[i].jump(wallDefualt))break;
+                }
+
+
 
             }
 
@@ -47,6 +62,7 @@ public class Main {
         } while (true);
 
     }
+    //Выбор участнико
     static act participant(){
         Scanner scr = new Scanner(System.in);
         String name;
@@ -94,6 +110,7 @@ public class Main {
         }
 
     }
+    //Выбор препятствий
     static ObstacleCourseElement obsticale(){Scanner scr = new Scanner(System.in);
         String name;
         int obstacleDifficult;

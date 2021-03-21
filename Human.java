@@ -17,23 +17,23 @@ public class Human implements act {
     @Override
     public boolean run(Treadmill trdm) {
         if (trdm.dist > this.maxRunDist){
-            System.out.println(className + this.name + " Устал и присел в сторонке");
+            System.out.println(className + " " + this.name + " Устал и присел в сторонке");
             return false;
         }
         else {
-            System.out.println(className + this.name + " прбежала" + trdm.dist);
+            System.out.println(className + " " + this.name + " прбежала " + trdm.dist + "м");
             return true;
         }
     }
 
     @Override
-    public boolean jump(ObstacleCourseElement wall) {
+    public boolean jump(Wall wall) {
         if (wall.height > this.maxJumpHeight){
-            System.out.println(className + this.name + " не перепрыгнул " + wall.height + "м");
+            System.out.println(className + " " + this.name + " не перепрыгнул " + wall.height + "м");
             return false;
         }
         else {
-            System.out.println(className + this.name + " перепрыгул стену" + wall.height + "м");
+            System.out.println(className + " " + this.name + " перепрыгул стену" + wall.height + "м");
             return true;
         }
 

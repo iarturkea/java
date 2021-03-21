@@ -1,5 +1,5 @@
 public interface act {
-    boolean run(ObstacleCourseElement trdm);
+    boolean run(Treadmill trdm);
     void sayInfo();
-    boolean jump(ObstacleCourseElement wall);
+    boolean jump(Wall wall);
 }
