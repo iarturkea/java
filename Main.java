@@ -10,11 +10,11 @@ public class Main {
         Wall wallDefualt = new Wall(0);
         System.out.println("Укажите количество участниов");
         participantsNum = readNum();
-        System.out.println("Укажите количество препятствий1");
+        System.out.println("Укажите количество препятствий");
 
         obstaclNum = readNum();
 
-        act[] participants = new act[participantsNum];
+        Act[] participants = new Act[participantsNum];
         ObstacleCourseElement[] obstacls = new ObstacleCourseElement[obstaclNum];
 
         for (int i = 0; i < participants.length; i++) {
@@ -63,7 +63,7 @@ public class Main {
 
     }
     //Выбор участнико
-    static act participant(){
+    static Act participant(){
         Scanner scr = new Scanner(System.in);
         String name;
         int maxRunDist;

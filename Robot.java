@@ -1,9 +1,9 @@
-public class Robot implements act {
+public class Robot implements Act {
 
-    static String className = "Робот";
-    String name;
-    int maxRunDist;
-    int maxJumpHeight;
+    static private String className = "Робот";
+    private String name;
+    private int maxRunDist;
+    private int maxJumpHeight;
 
     Robot(String name, int mrd, int mjh){
 

@@ -1,9 +1,8 @@
-public class Human implements act {
-
-    static String className = "Человек";
-    String name;
-    int maxRunDist;
-    int maxJumpHeight;
+public class Human implements Act {
+    static private String className = "Человек";
+    private String name;
+    private int maxRunDist;
+    private int maxJumpHeight;
 
     Human(String name, int mrd, int mjh){
 

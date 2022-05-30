@@ -1,8 +1,8 @@
-public class Cat implements act {
-    static String className = "Кошка";
-    String name;
-    int maxRunDist;
-    int maxJumpHeight;
+public class Cat implements Act {
+    static private String className = "Кошка";
+    private String name;
+    private int maxRunDist;
+    private int maxJumpHeight;
 
     Cat(String name, int mrd, int mjh){
 
