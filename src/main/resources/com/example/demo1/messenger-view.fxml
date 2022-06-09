@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="275.0" prefWidth="526.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="com.example.demo1.MessengerController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <MenuBar>
+        <Menu text="Menu">
+            <MenuItem text="Clear History" onAction="#clickClearHistory"/>
+            <MenuItem text="Exit" onAction="#clickExit"/>
+        </Menu>
+    </MenuBar>
+    <TextArea fx:id="msgHistoryArea" editable="false" VBox.vgrow="ALWAYS" />
+    <HBox spacing="20">
+        <TextField fx:id="userMsg" HBox.hgrow="ALWAYS" />
+        <Button defaultButton="true" onAction="#clickSendButton" text="Send" />
+    </HBox>
+
+
+</VBox>
