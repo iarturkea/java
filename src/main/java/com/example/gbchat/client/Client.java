@@ -43,7 +43,7 @@ public class Client {
                 controller.addMsg("Успешная автоизация под ником " + nick);
                 break;
             }
-            controller.addLoginMsg(msg);
+            controller.addMsg(msg);
 
         }
     }
