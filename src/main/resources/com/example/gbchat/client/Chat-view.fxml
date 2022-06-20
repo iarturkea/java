@@ -18,7 +18,7 @@
                 </Menu>
             </MenuBar>
         <VBox fx:id="loginPanel">
-            <TextArea fx:id="msgLoginArea" editable="false" VBox.vgrow="ALWAYS" />
+
             <HBox fx:id="loginBox">
                 <TextField fx:id="loginField" promptText="login"/>
                 <PasswordField fx:id="passField" promptText="password"/>
@@ -26,9 +26,9 @@
             </HBox>
 
         </VBox>
-
+        <TextArea fx:id="msgHistoryArea" editable="false" VBox.vgrow="ALWAYS" />
         <VBox fx:id="msgBox" visible="false">
-            <TextArea fx:id="msgHistoryArea" editable="false" VBox.vgrow="ALWAYS" />
+
             <HBox spacing="20">
                 <TextField fx:id="userMsg" HBox.hgrow="ALWAYS" />
                 <Button defaultButton="true" onAction="#clickSendButton" text="Send" />
