@@ -11,6 +11,7 @@ public class Client {
     private DataInputStream in;
     private DataOutputStream out;
     private final ChatController controller;
+    private boolean authOk = false;
 
 
     public Client(ChatController controller) {
@@ -24,7 +25,9 @@ public class Client {
         new Thread(() -> {
             try {
                 waitAuth();
-                readMsg();
+                if (this.authOk) {
+                    readMsg();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -40,7 +43,13 @@ public class Client {
                 final String[] split = msg.split("\\p{Blank}+");
                 final String nick = split[1];
                 controller.setAuth(true);
+                this.authOk = true;
                 controller.addMsg("Успешная автоизация под ником " + nick);
+                break;
+            }
+            if ("/end".equals(msg)){
+                controller.addMsg("Пользователь отключен");
+                controller.setAuth(false);
                 break;
             }
             controller.addMsg(msg);
