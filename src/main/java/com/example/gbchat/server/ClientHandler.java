@@ -13,6 +13,7 @@ public class ClientHandler {
     private DataOutputStream out;
     private String nick;
     private AuthService authService;
+    private Boolean authOk = false;
 
     public ClientHandler(Socket socket, ChatServer server, AuthService authService) {
 
@@ -20,17 +21,35 @@ public class ClientHandler {
         try {
             this.server = server;
             this.authService = authService;
-            this.socket =socket;
-            this.in =new DataInputStream(socket.getInputStream());
+            this.socket = socket;
+            this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
 
             new  Thread(() -> {
                 try {
+
+                    new Thread(() ->{
+                        try {
+                            Thread.sleep(12000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if(!authOk){
+                            System.out.println("Time out auth false");
+                            closeConnection();
+                        }else System.out.println("Time out auth true " + nick);
+                    }).start();
+
                     authenticate();
-                    readMsg();
+
+                    if (authOk) {
+                        readMsg();
+                    }
                 }finally {
-                    closeConnection();
-                    System.out.println("Client disconnected");
+                   if (authOk) {
+                       closeConnection();
+                   }
+                   System.out.println("Client disconnected");
                 }
             }).start();
 
@@ -64,6 +83,7 @@ public class ClientHandler {
                             sendMsg("Пользователь уже на сервисе");
                             continue;
                         }
+                        authOk = true;
                         sendMsg("/authOk " + nick);
                         this.nick = nick;
                         server.broadcast(nick + " зашел в чат");
@@ -75,13 +95,14 @@ public class ClientHandler {
 
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                break;
             }
         }
     }
 
     private void closeConnection() {
         sendMsg("/end");
+
         if (in != null) {
             try {
                 in.close();
